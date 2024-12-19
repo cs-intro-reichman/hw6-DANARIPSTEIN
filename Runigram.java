@@ -131,26 +131,30 @@ public class Runigram {
 	}
 
 	/**
-	 * Returns an image which is the scaled version of the given image.
-	 * The image is scaled (resized) to have the given width and height.
-	 */
-	public static Color[][] scaled(Color[][] image, int width, int height) {
-		Color[][] ans = new Color[width][height];
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
+ * Returns an image which is the scaled version of the given image.
+ * The image is scaled (resized) to have the given width and height.
+ */
+public static Color[][] scaled(Color[][] image, int width, int height) {
+    Color[][] ans = new Color[width][height];
 
-				int originali = (int) ((double) i / width * image.length);
-				int originalj = (int) ((double) j / height * image[0].length);
+    // מחשבים את מיקום הפיקסלים בתמונה המוקטנת
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            // חישוב מיקום המקורי בתמונה לפני שינוי הגודל
+            int originali = (int) ((double) i / width * image.length);
+            int originalj = (int) ((double) j / height * image[0].length);
 
-				originali = Math.min(originali, image.length - 1);
-				originalj = Math.min(originalj, image[0].length - 1);
+            // מניעת חריגה מעבר לגבולות
+            originali = Math.min(originali, image.length - 1);
+            originalj = Math.min(originalj, image[0].length - 1);
 
-				ans[i][j] = image[originali][originalj];
-			}
-		}
-		return ans;
+            // הגדרת הפיקסל החדש בתמונה המוקטנת
+            ans[i][j] = image[originali][originalj];
+        }
+    }
+    return ans;
+}
 
-	}
 
 	/**
 	 * Computes and returns a blended color which is a linear combination of the two
