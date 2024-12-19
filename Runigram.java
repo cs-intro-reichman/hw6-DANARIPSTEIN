@@ -135,21 +135,21 @@ public class Runigram {
  * The image is scaled (resized) to have the given width and height.
  */
 public static Color[][] scaled(Color[][] image, int width, int height) {
-    Color[][] ans = new Color[width][height];
+    int orgHeight = image.length;
+	int orgWidth = image[0].length;
+	Color[][] ans = new Color[width][height];
+	double y = (double) orgHeight/ height;
+	double x = (double) orgWidth / width;
 
-    // מחשבים את מיקום הפיקסלים בתמונה המוקטנת
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            // חישוב מיקום המקורי בתמונה לפני שינוי הגודל
-            int originali = (int) ((double) i / width * image.length);
-            int originalj = (int) ((double) j / height * image[0].length);
-
-            // מניעת חריגה מעבר לגבולות
-            originali = Math.min(originali, image.length - 1);
-            originalj = Math.min(originalj, image[0].length - 1);
-
-            // הגדרת הפיקסל החדש בתמונה המוקטנת
-            ans[i][j] = image[originali][originalj];
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            int oldY = (int) (i*y);
+			int oldX = (int) (j*x);
+           
+			oldY = Math.min(oldY, orgHeight- 1);
+            oldX = Math.min(oldX, orgWidth - 1);
+          
+            ans[i][j] = image[oldY][oldX];
         }
     }
     return ans;
